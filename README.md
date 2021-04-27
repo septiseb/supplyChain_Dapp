@@ -15,3 +15,6 @@ npm run dev
 
 Then allow metamask permission and connect to the Rinkeby Testnet
 
+ADDRESS
+WALLET - 0x9D55012fC201a4d171c0304fE2358f3DD1922FB7
+CONTRACT - 0xfFF076305C20Db1aCbF41EF834d79dea874E7E3E
