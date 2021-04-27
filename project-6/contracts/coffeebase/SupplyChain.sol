@@ -147,7 +147,7 @@ contract SupplyChain is Ownable, ConsumerRole, RetailerRole, FarmerRole, Distrib
   // In the constructor set 'owner' to the address that instantiated the contract
   // and set 'sku' to 1
   // and set 'upc' to 1
-  constructor() public payable {
+  constructor() Ownable() public payable {
     ownerContract = msg.sender;
     sku = 1;
     upc = 1;
@@ -161,7 +161,7 @@ contract SupplyChain is Ownable, ConsumerRole, RetailerRole, FarmerRole, Distrib
   }
 
   // Define a function 'harvestItem' that allows a farmer to mark an item 'Harvested'
-  function harvestItem(uint _upc, address _originFarmerID, string _originFarmName, string _originFarmInformation, string  _originFarmLatitude, string  _originFarmLongitude, string  _productNotes) public 
+  function harvestItem(uint _upc, address _originFarmerID, string _originFarmName, string _originFarmInformation, string  _originFarmLatitude, string  _originFarmLongitude, string  _productNotes) public onlyFarmer
   {
     // Add the new item as part of Harvest
     items[_upc].sku = sku;
@@ -263,6 +263,7 @@ contract SupplyChain is Ownable, ConsumerRole, RetailerRole, FarmerRole, Distrib
     // Call modifier to check if upc has passed previous supply chain stage
     shipped(_upc)
     // Access Control List enforced by calling Smart Contract / DApp
+    onlyRetailer
     {
     // Update the appropriate fields - ownerID, retailerID, itemState
     items[_upc].ownerID = msg.sender;
@@ -278,6 +279,7 @@ contract SupplyChain is Ownable, ConsumerRole, RetailerRole, FarmerRole, Distrib
     // Call modifier to check if upc has passed previous supply chain stage
     received(_upc)
     // Access Control List enforced by calling Smart Contract / DApp
+    onlyConsumer
     {
     // Update the appropriate fields - ownerID, consumerID, itemState
      items[_upc].ownerID = msg.sender;
